@@ -1,0 +1,209 @@
+#:import Factory kivy.factory.Factory
+<InitialScreen>:
+	BoxLayout:
+		orientation: 'vertical'
+
+		BoxLayout:
+			size_hint: (1, .2)
+			
+			Spinner:
+				id: degree_field_spinner
+				size_hint_y: .5
+				pos_hint: {'center_y': .5}
+				values: ['Computer Science', 'Software Engineering']
+				text: 'Choose Degree Field'
+
+		GridLayout:
+			cols: 2
+			size_hint: (1, .8)
+
+			BoxLayout:
+				id: employment_layout
+				orientation: 'vertical'
+				canvas.before:
+					Color:
+						rgb: 1, 1, 1
+					Line:
+						rectangle: self.x+1, self.y+1, self.width-1, self.height-1
+					
+
+				BoxLayout:
+					size_hint: (1, .2)
+
+					Label:
+						id: employment_title_label
+						bold: True
+						underline: True
+						text: 'Employment Statistics'
+						font_size: '30dp'
+
+				BoxLayout:
+					orientation: 'vertical'
+					size_hint: (1, .8)
+
+					Label:
+						id: total_employed_label
+						text: 'Total Employed: 12134'
+
+					Label:
+						id: total_unemployed_label
+						text: 'Total Unemployed: 1234'
+
+					Label: 
+						id: percent_employed_label
+						text: 'Percentage Employed: 69%'
+
+					Button:
+						id: employment_graph_btn
+						size_hint: (.5, .5)
+						pos_hint: {'center_x': 0.5}
+						text: 'Show Histogram'
+						on_release: root.show_plot()
+
+			BoxLayout:
+				id: satisfaction_layout
+				orientation: 'vertical'
+				canvas.before:
+					Color:
+						rgb: 1, 1, 1
+					Line:
+						rectangle: self.x+1, self.y+1, self.width-1, self.height-1
+
+				BoxLayout:
+					size_hint: (1, .2)
+
+					Label:
+						id: satisfaction_title_label
+						text: 'Job Satisfaction Index'
+						bold: True
+						underline: True
+						font_size: '30dp'
+
+				BoxLayout:
+					orientation: 'vertical'
+					size_hint: (1, .8)
+
+					Label:
+						id: satisfaction_label
+						text: 'Average Job Satisfaction: 7.45'
+						font_size: '18dp'
+
+			BoxLayout:
+				id: degree_types_layout
+				orientation: 'vertical'
+				canvas.before:
+					Color:
+						rgb: 1, 1, 1
+					Line:
+						rectangle: self.x+1, self.y+1, self.width-1, self.height-1
+
+				BoxLayout:
+					size_hint: (1, .2)
+
+					Label:
+						id: degree_types_title_label
+						text: 'Degree Types'
+						bold: True
+						underline: True
+						font_size: '30dp'
+
+				BoxLayout:
+					orientation: 'vertical'
+					size_hint: (1, .8)
+
+					Label:
+						id: bachelors_label
+						text: "Bachelor's Degree: 123"
+
+					Label:
+						id: masters_label
+						text: "Master's Degree: 123"
+
+					Label:
+						id: phd_label
+						text: "PhD/Doctorate Degree: 123"
+
+					Button:
+						id: degree_types_graph_btn
+						size_hint: (.5, .5)
+						pos_hint: {'center_x': 0.5}
+						text: 'Show Histogram of Percentages'
+						on_release: root.show_plot()
+
+			BoxLayout:
+				id: glassdoor_layout
+				orientation: 'vertical'
+				canvas.before:
+					Color:
+						rgb: 1, 1, 1
+					Line:
+						rectangle: self.x+1, self.y+1, self.width-1, self.height-1
+
+				BoxLayout:
+					size_hint: (1, .2)
+
+					Label:
+						id: glassdoor_title_label
+						text: 'Job Availability'
+						bold: True
+						underline: True
+						font_size: '30dp'
+
+				BoxLayout:
+					orientation: 'vertical'
+					size_hint: (1, .8)
+
+					Spinner:
+						id: job_types_spinner
+						size_hint: (.5, .2)
+						pos_hint: {'center_x': 0.5}
+						text: 'Choose Job Type'
+						values: ['Web Dev', 'Software Engineer', 'Data Scientist']
+
+					Label:
+						id: place_holder
+						size_hint: (1, .1)
+						text: ''
+
+					Button:
+						id: go_btn
+						size_hint: (.2, .2)
+						pos_hint: {'center_x': 0.5}
+						text: 'Go'
+						on_release: root.process_glassdoor_api()
+					Label:
+						id: jobs_available_label
+						text: ''
+
+<GraphPopup@Popup>:
+	id: graph_popup
+	size_hint: (.7, .7)
+	title: 'Graph'
+
+	BoxLayout:
+		orientation: 'vertical'
+
+		BoxLayout:
+			id: graph_layout
+			size_hint: (1, .8)
+
+		Button:
+			id: close_button
+			size_hint: (1, .2)
+			text: 'Close'
+			on_release: root.dismiss()
+			on_press: root.ids.graph_layout.clear_widgets()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
