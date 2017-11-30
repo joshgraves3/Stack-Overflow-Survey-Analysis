@@ -1,17 +1,19 @@
 #:import Factory kivy.factory.Factory
-<InitialScreen>:
+<Screen1>:
+
 	BoxLayout:
 		orientation: 'vertical'
 
 		BoxLayout:
 			size_hint: (1, .2)
-			
+
 			Spinner:
 				id: degree_field_spinner
 				size_hint_y: .5
 				pos_hint: {'center_y': .5}
 				values: ['Computer Science', 'Software Engineering']
 				text: 'Choose Degree Field'
+				font_size: '18dp'
 
 		GridLayout:
 			cols: 2
@@ -25,7 +27,7 @@
 						rgb: 1, 1, 1
 					Line:
 						rectangle: self.x+1, self.y+1, self.width-1, self.height-1
-					
+
 
 				BoxLayout:
 					size_hint: (1, .2)
@@ -43,22 +45,19 @@
 
 					Label:
 						id: total_employed_label
-						text: 'Total Employed: 12134'
 
 					Label:
 						id: total_unemployed_label
-						text: 'Total Unemployed: 1234'
 
-					Label: 
+					Label:
 						id: percent_employed_label
-						text: 'Percentage Employed: 69%'
 
 					Button:
 						id: employment_graph_btn
 						size_hint: (.5, .5)
 						pos_hint: {'center_x': 0.5}
-						text: 'Show Histogram'
-						on_release: root.show_plot()
+						text: 'Show Graph'
+						on_release: root.plot_employment()
 
 			BoxLayout:
 				id: satisfaction_layout
@@ -85,7 +84,6 @@
 
 					Label:
 						id: satisfaction_label
-						text: 'Average Job Satisfaction: 7.45'
 						font_size: '18dp'
 
 			BoxLayout:
@@ -112,23 +110,31 @@
 					size_hint: (1, .8)
 
 					Label:
+						id: no_degree_label
+						size_hint: (1, .1)
+
+					Label:
+						id: associates_label
+						size_hint: (1, .1)
+
+					Label:
 						id: bachelors_label
-						text: "Bachelor's Degree: 123"
+						size_hint: (1, .1)
 
 					Label:
 						id: masters_label
-						text: "Master's Degree: 123"
+						size_hint: (1, .1)
 
 					Label:
 						id: phd_label
-						text: "PhD/Doctorate Degree: 123"
+						size_hint: (1, .1)
 
 					Button:
 						id: degree_types_graph_btn
-						size_hint: (.5, .5)
+						size_hint: (.5, .085)
 						pos_hint: {'center_x': 0.5}
-						text: 'Show Histogram of Percentages'
-						on_release: root.show_plot()
+						text: 'Show Graph'
+						on_release: root.plot_degree_types()
 
 			BoxLayout:
 				id: glassdoor_layout
@@ -171,39 +177,6 @@
 						pos_hint: {'center_x': 0.5}
 						text: 'Go'
 						on_release: root.process_glassdoor_api()
+
 					Label:
 						id: jobs_available_label
-						text: ''
-
-<GraphPopup@Popup>:
-	id: graph_popup
-	size_hint: (.7, .7)
-	title: 'Graph'
-
-	BoxLayout:
-		orientation: 'vertical'
-
-		BoxLayout:
-			id: graph_layout
-			size_hint: (1, .8)
-
-		Button:
-			id: close_button
-			size_hint: (1, .2)
-			text: 'Close'
-			on_release: root.dismiss()
-			on_press: root.ids.graph_layout.clear_widgets()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
