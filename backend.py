@@ -114,7 +114,18 @@ def get_satisfaction_index(data, degree_field):
 def get_degree_type_stats(data, degree_field):
 	return create_stat_dictionary(data, 'FormalEducation', degree_field)
 
+def get_job_type_counts(job_types_list):
+	type_counts = {}
+
+	for job_type in job_types_list:
+		print(job_type)
+		jobs_avail = process_glassdoor_response(job_type)
+		type_counts[job_type] = jobs_avail
+
+	return type_counts
+
 def get_glassdoor_api_json(job_type):
+	print('#################', job_type)
 	# Partner ID:	232698
 	# Key:	d8TIuJMhACu
 	base = 'http://api.glassdoor.com/api/api.htm?'
@@ -129,7 +140,7 @@ def get_glassdoor_api_json(job_type):
 	q = '&q='+job_type
 
 	url = base+v+response_format+tp+tk+user_ip+user_agent+action+q+cities
-	# print(url)
+	print(url)
 	#'http://api.glassdoor.com/api/api.htm?v=1&format=json&t.p=232698&t.k=d8TIuJMhACu&userip=88.192.249.8&useragent=Mozilla/%2F4.0&action=jobs-stats&q=engineer&returnCities=True'
 	request = Request(url)
 	request.add_header('User-Agent', 'Mozilla/%2F4.0')
@@ -149,4 +160,3 @@ def process_glassdoor_response(job_type):
 # run everything
 so_data = clean_data()
 backend_data = set_backend_data_vars(so_data)
-get_satisfaction_index(so_data, 'computer science or software engineering')

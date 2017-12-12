@@ -16,11 +16,13 @@ from kivy.factory import Factory
 # logic imports
 import os
 import matplotlib.pyplot as plt
+from matplotlib import rcParams
+rcParams.update({'figure.autolayout': True})
 import numpy as np
 from collections import OrderedDict
 
 # backend import
-import read_backend as backend
+import backend as backend
 
 
 class Screen1(Screen):
@@ -30,8 +32,8 @@ class Screen1(Screen):
 
 		# set up popup for graphs
 		self.popup_layout = BoxLayout(orientation='vertical')
-		self.graph_area = BoxLayout(id='graph_layout', size_hint=(1, .8))
-		self.close_btn = Button(id='close_button', size_hint=(1, .2), text='Close', on_release=self.close_popup)
+		self.graph_area = BoxLayout(id='graph_layout', size_hint=(1, .9))
+		self.close_btn = Button(id='close_button', size_hint=(1, .1), text='Close', on_release=self.close_popup)
 		self.popup_layout.add_widget(self.graph_area)
 		self.popup_layout.add_widget(self.close_btn)
 		self.popup = Popup(id='graph_popup', content=self.popup_layout, size_hint=(.7, .7), title='Graph')
@@ -133,7 +135,21 @@ class Screen1(Screen):
 		graph = self.create_plot(self.degree_types_stats, 'Degree Type', 'Degree Type Aggregates')
 
 		# add graph to popup and display
-		self.graph_area.add_widget(FigureCanvasKivyAgg(plt.gcf()))
+		self.graph_area.add_widget(FigureCanvasKivyAgg(graph))
+		self.popup.open()
+
+	def plot_available_jobs(self):
+		cleaned_jobs = []
+		for job_type in backend.backend_data['developer_types']:
+			cleaned_jobs.append(self.clean_job_type(job_type))
+
+		jobs_dict = backend.get_job_type_counts(cleaned_jobs)
+
+		# set graph
+		graph = self.create_plot(jobs_dict, 'Job Type', 'Number of Jobs Available by Job')
+
+		# add graph to popup and display
+		self.graph_area.add_widget(FigureCanvasKivyAgg(graph))
 		self.popup.open()
 
 	def create_plot(self, dict, x_label, title):
@@ -142,7 +158,7 @@ class Screen1(Screen):
 		x_vals = np.arange(0, len(dict))
 		x_pos = np.arange(len(x_vals))
 		plt.bar(x_vals, height=dict.values())
-		plt.xticks(x_pos, dict.keys())
+		plt.xticks(x_pos, dict.keys(), rotation='vertical', fontsize=10)
 		plt.xlabel(x_label)
 		plt.title(title)
 

@@ -180,3 +180,10 @@
 
 					Label:
 						id: jobs_available_label
+
+					Button:
+						id: show_jobs_graph
+						size_hint: (.5, .22)
+						pos_hint: {'center_x': 0.5}
+						text: 'Show Histogram of All Job Types'
+						on_release: root.plot_available_jobs()
